@@ -2,7 +2,7 @@
 
 # Project Title
 
-Detecting And Extracting Tables From Pdfs
+Detecting And Extracting Tables From Pdfs.
 
 # Overview
 This project aims to develop a tool for extracting tables from PDFs without relying on traditional tools like Tabula or Camelot. The tool utilizes PyMuPDF for PDF parsing and pandas for data manipulation to accurately identify, extract, and export tables into Excel sheets. The objective is to enhance document processing efficiency by automating the extraction of structured data from PDF documents.
