@@ -1,5 +1,6 @@
 # ScoreMe_Hackathon
-
+(Respected Sir/Mam,
+I used Google Collab for this hackathon and then transfered the code to GitHub. So I have uploaded the code in both the Google Collab and GitHub files respectively for better understanding.
 # Project Title
 
 A brief description of what this project does and who it's for.
