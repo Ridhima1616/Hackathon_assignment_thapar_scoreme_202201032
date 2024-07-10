@@ -1,1 +1,72 @@
+!pip install pymupdf pandas openpyxl
+import fitz  # PyMuPDF
+import pandas as pd
 
+def extract_tables_from_pdf(pdf_path):
+    doc = fitz.open(pdf_path)
+    tables = []
+
+    for page_num in range(doc.page_count):
+        page = doc.load_page(page_num)
+        text = page.get_text("dict")
+        blocks = text["blocks"]
+
+        for block in blocks:
+            if block["type"] == 0:  # Text block
+                lines = block["lines"]
+                table = []
+                for line in lines:
+                    spans = line["spans"]
+                    row = []
+                    for span in spans:
+                        row.append(span["text"])
+                    table.append(row)
+                tables.append(table)
+
+    return tables
+
+def tables_to_dataframes(tables):
+    dataframes = []
+    for table in tables:
+        df = pd.DataFrame(table)
+        dataframes.append(df)
+    return dataframes
+
+def export_to_excel(dataframes, output_path):
+    illegal_characters = ['\x04', '\x05', '\x06', '\x0B', '\t']  # List of illegal characters found
+    with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
+        for i, df in enumerate(dataframes):
+            # Clean the dataframe from illegal characters
+            cleaned_df = df.replace(illegal_characters, '', regex=True)
+            cleaned_df.to_excel(writer, sheet_name=f'Table_{i+1}', index=False)
+    print(f"Tables have been exported to {output_path}")
+
+def main(pdf_path, output_path):
+    tables = extract_tables_from_pdf(pdf_path)
+    dataframes = tables_to_dataframes(tables)
+    export_to_excel(dataframes, output_path)
+
+if __name__ == "__main__":
+    pdf_path = "test3.pdf"  # PDF name
+    output_path = "output_test3.xlsx"  # Excel file
+    main(pdf_path, output_path)
+
+def main(pdf_path, output_path):
+    tables = extract_tables_from_pdf(pdf_path)
+    dataframes = tables_to_dataframes(tables)
+    export_to_excel(dataframes, output_path)
+
+if __name__ == "__main__":
+    pdf_path = "test5.pdf"  # PDF name
+    output_path = "output_test5.xlsx"  # Excel file
+    main(pdf_path, output_path)
+
+def main(pdf_path, output_path):
+    tables = extract_tables_from_pdf(pdf_path)
+    dataframes = tables_to_dataframes(tables)
+    export_to_excel(dataframes, output_path)
+
+if __name__ == "__main__":
+    pdf_path = "test6.pdf"  # PDF name
+    output_path = "output_test6.xlsx"  # Excel file
+    main(pdf_path, output_path)
